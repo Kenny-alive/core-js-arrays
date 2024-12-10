@@ -580,7 +580,11 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
 function shiftArray(arr, n) {
-
+  let translation = n % arr.length;
+  if (translation < 0) {
+    translation += arr.length;
+  }
+  return [...arr.slice(-translation), ...arr.slice(0, -translation)];
 }
 
 /**
@@ -596,8 +600,20 @@ function shiftArray(arr, n) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const sortNumbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  return arr.sort((a, b) => sortNumbers.indexOf(a) - sortNumbers.indexOf(b));
 }
 
 /**
@@ -619,8 +635,25 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  let result;
+  if (arr.length <= 1) {
+    return arr;
+  }
+  if (arr.length === 2) {
+    return [arr[1], arr[0]];
+  }
+  const centerPosition = Math.floor(arr.length / 2);
+  if (arr.length % 2 === 0) {
+    result = [...arr.slice(centerPosition), ...arr.slice(0, centerPosition)];
+  } else {
+    result = [
+      ...arr.slice(centerPosition + 1),
+      arr[centerPosition],
+      ...arr.slice(0, centerPosition),
+    ];
+  }
+  return result;
 }
 
 module.exports = {
